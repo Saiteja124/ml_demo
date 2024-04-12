@@ -64,7 +64,7 @@ app = Flask(__name__)
 def process_text(text, result_df):
 
     # Load the SpaCy model
-    nlp = spacy.load(r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\ML\model\model-best')
+    nlp = spacy.load('model/model-best')
 
     # Extract entities and labels
     doc = nlp(text)
@@ -322,7 +322,7 @@ def process_text(text, result_df):
 
 
     # Load keywords from CSV
-    with open(r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\Source\Unwanted_words.csv', 'r') as csvfile:
+    with open('Source/Unwanted_words.csv', 'r') as csvfile:
         keyword_reader = csv.reader(csvfile)
         keywords = [row[0] for row in keyword_reader]
  

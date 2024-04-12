@@ -23,6 +23,7 @@
             display: none;
             margin-right: 20px; 
         }
+        
     .options a.active {
     background-color: #057909;
     color: white;
@@ -32,7 +33,6 @@
     background-color: #057909;
     color: white;
 }
-
 
 </style>
 <body>
@@ -55,13 +55,21 @@
                        <br><br>
                        <!-- <form id="uploadForm" enctype="multipart/form-data"> -->
                         <!-- <form id="uploadForm" method="POST" enctype="multipart/form-data"></form> -->
-                        <h2 style="color:#057909;margin-top:4px;">Upload an Image <i class="fa-regular fa-file-image" style="margin-right:2px;"></i>/Video <i class="fa-regular fa-file-video" style="margin-left:2px;"></i></h2>
+                        <h2 style="color:#057909;margin-top:4px;">Upload an Image <i class="fa-regular fa-file-image" style="margin-right:10px;"></i>/Video <i class="fa-regular fa-file-video" style="margin-left:2px;"></i></h2>
 
-                       <form id="uploadForm" enctype="multipart/form-data">
-                           <input type="file" id="mediaFile" name="file" accept=".png,.jpg,.jpeg,.mp4,.avi" required><br><br>
-                           <button type="submit" class="btn btn-primary1">Upload</button>
-                       </form>
-                       <!-- <div id="result"></div> -->
+                        <form method='POST' enctype="multipart/form-data" style="align-content: center; text-align: center;display: flex;">
+                            {{form.hidden_tag()}}
+                            {{form.file(class_="custom-file-input")}}
+                            <div>
+                                <button type="submit" name="favorite" value="x" class="btn btn-primary1">
+                                    Upload
+                                </button>
+                            </div>
+                        </form>
+                        <section class="col-sm">
+                            <img src="{{ url_for('video') }}" alt="Upload video" style="width: 600px; height: 700px; border-radius: 100px; object-fit: contain; margin: 40px; border-bottom-left-radius: 40px;">
+                        </section>
+
                        <div id="uploadStatus"></div>
                    </div>
                </div>
@@ -92,29 +100,29 @@
         <div class="content">
             <div class="content-section ocr-content active">
                 <br>
-                <h2>OCR Application</h2>
+                <h2>Object Detection</h2>
                 <p>
-                <h1>What is OCR (Optical Character Recognition)?</h1>
-    <p>Optical Character Recognition (OCR) is the process that converts an image of text into a machine-readable text format. For example, if you scan a form or a receipt, your computer saves the scan as an image file. You cannot use a text editor to edit, search, or count the words in the image file. However, you can use OCR to convert the image into a text document with its contents stored as text data.</p>
+                <h1>What is Object Detection</h1>
+    <p>Object detection is a computer vision task that involves identifying and locating objects within an image or a video frame. The goal of object detection is to not only recognize what types of objects are present in the image but also to determine their precise locations by drawing bounding boxes around them.</p>
 
-    <h2>Why is OCR important?</h2>
-    <p>Most business workflows involve receiving information from print media. Paper forms, invoices, scanned legal documents, and printed contracts are all part of business processes. These large volumes of paperwork take a lot of time and space to store and manage. Though paperless document management is the way to go, scanning the document into an image creates challenges. The process requires manual intervention and can be tedious and slow.</p>
-    <p>Moreover, digitizing this document content creates image files with the text hidden within it. Text in images cannot be processed by word processing software in the same way as text documents. OCR technology solves the problem by converting text images into text data that can be analyzed by other business software. You can then use the data to conduct analytics, streamline operations, automate processes, and improve productivity.</p>
+    <h2>Why is Object Detection important?</h2>
+    <p> Object detection has a wide range of practical uses.  For instance, it's  used in self-driving cars to identify pedestrians, traffic signals, and lanes,  leading to safer roads It's also  employed in video surveillance systems for security purposes</p>
+    <p>Object detection  goes beyond just identifying objects. It can pinpoint their location within the image or video frame,  even  if multiple objects are present. This allows for  more  in-depth  image analysis  like counting objects or tracking their movement</p>
 
-    <h2>How does OCR work?</h2>
-    <p>The OCR engine or OCR software works by using the following steps:</p>
+    <h2>How does Object Detection work?</h2>
+    <p>The Object Detection engine or Object Detection software works by using the following steps:</p>
     <ol>
-        <li><strong>Image acquisition:</strong> A scanner reads documents and converts them to binary data. The OCR software analyzes the scanned image and classifies the light areas as background and the dark areas as text.</li>
-        <li><strong>Preprocessing:</strong> The OCR software first cleans the image and removes errors to prepare it for reading. These are some of its cleaning techniques:</li>
+        <li><strong>Input Image:</strong> The input image is preprocessed, which may include steps like resizing, normalization, and color space conversion to prepare the image for the object detection model.</li>
+        <li><strong>Preprocessing:</strong> Before detecting objects, the system needs to extract meaningful features from the input image. This is often achieved through deep learning</li>
         <ul>
             <li>Deskewing or tilting the scanned document slightly to fix alignment issues during the scan.</li>
             <li>Despeckling or removing any digital image spots or smoothing the edges of text images.</li>
             <li>Cleaning up boxes and lines in the image.</li>
         </ul>
-        <li><strong>Script recognition for multi-language OCR technology</strong></li>
-        <li><strong>Text recognition:</strong> The two main types of OCR algorithms or software processes that an OCR software uses for text recognition are called pattern matching and feature extraction.</li>
+        <li><strong>Script recognition for multi-language Object Detection technology</strong></li>
+        <li><strong>Object Localization:</strong> Object detection not only involves identifying objects but also localizing them within the image. Localization refers to determining the spatial extent of objects by predicting bounding boxes that enclose them.</li>
         <ul>
-            <li><strong>Pattern matching:</strong> Pattern matching works by isolating a character image, called a glyph, and comparing it with a similarly stored glyph. Pattern recognition works only if the stored glyph has a similar font and scale to the input glyph. This method works well with scanned images of documents that have been typed in a known font.</li>
+            <li><strong>Classification:</strong> Once objects are localized, the system classifies each detected object into predefined categories or classes. This step involves assigning a label or category to each bounding box, indicating what type of object it represents (e.g., person, car, dog, etc.). Classification is usually performed using a classification head attached to the feature extraction network, which outputs probabilities or scores for each class.</li>
         </ul>
     </ol>
 </p>
@@ -187,14 +195,16 @@ document.getElementById('uploadForm').addEventListener('submit', function(event)
             uploadStatus.style.color = "red"; // Red color for error
         }
     }
-// Function to handle logout
-function logout()
-        {
-            window.location.href = "/";
-        }
+
+    function logout() {
+        window.location.href = "/";
+    }
+
+
  </script>
     <!-- <script src="ocr application.js"></script> -->
 
 
 </body>
 </html>
+

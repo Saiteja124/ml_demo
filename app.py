@@ -15,12 +15,12 @@ import cv2
 # form_recognizer_client = FormRecognizerClient(azure_endpoint, form_recognizer_credential)
 
 import sys
-sys.path.append(r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\ML\Invoice_ocr.py')  # Adjust the path accordingly
-sys.path.append(r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\database')
+sys.path.append('ML/Invoice_ocr.py')  # Adjust the path accordingly
+sys.path.append('database')
 from ML.Invoice_ocr import process_text,specific_fields
 from database.create_db import register_user,login_user,user_exists,email_exists
 
-app = Flask(__name__,template_folder=r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\templates')
+app = Flask(__name__,template_folder='templates')
 
 # def process_pdf(uploaded_file):
     # Convert PDF to images
@@ -51,7 +51,7 @@ app = Flask(__name__,template_folder=r'C:\Users\Sai teja\Desktop\Sabio_OCR_Appli
         # for page in form_pages:
         #     extracted_text += " ".join([line.text for line in page.lines])
 extracted_text=""
-df = pd.read_csv(r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\Source\project-7-at-2023-10-25-15-38-70d0741e.csv')
+df = pd.read_csv('Source/project-7-at-2023-10-25-15-38-70d0741e.csv')
 df_ = df.drop(labels=[1, 3], axis=0).reset_index(drop=True)
 # print(df_)
 text1 = df_.text.to_list()
@@ -156,7 +156,7 @@ def process_text_route():
             pdf_processed = True
 
             # Save the result to a CSV file
-            result_csv_path = r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\output\processed_result.csv'
+            result_csv_path = 'output/processed_result.csv'
             
             result_df.to_csv(result_csv_path, index=False)
 
@@ -209,7 +209,7 @@ def process_specific_fields():
 
 
         # Write the DataFrame to a CSV file
-        output_file = r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\output\extracted_columns.csv'
+        output_file = 'output/extracted_columns.csv'
             
 
         # Write the DataFrame to a CSV file
@@ -243,7 +243,7 @@ def download_csv():
     global pdf_processed
     if pdf_processed:
         try:
-            result_csv_path = r'C:\Users\Sai teja\Desktop\Sabio_OCR_Application\output\processed_result.csv'
+            result_csv_path = 'output/processed_result.csv'
             return send_file(result_csv_path, as_attachment=True, download_name='processed_result.csv')
         except Exception as e:
             app.logger.error(f"Error downloading CSV: {str(e)}")

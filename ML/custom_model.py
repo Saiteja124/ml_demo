@@ -10,7 +10,7 @@ def video_detection(path_x):
     frame_height = int(cap.get(4))
     # out=cv2.VideoWriter('output.avi', cv2.VideoWriter_fourcc('M', 'J', 'P','G'), 10, (frame_width, frame_height))
 
-    model = YOLO(r"C:\Users\Sai teja\Desktop\Sabio_OCR_Application\Object detection\best.pt")
+    model = YOLO("Object detection/best.pt")
     classNames = ["dog", "person", "cat", "tv", "car", "meatballs", "marinara sauce", "tomato soup",
                   "chicken noodle soup", "french onion soup", "chicken breast", "ribs", "pulled pork",
                   "hamburger", "cavity", "Ac", "aeroplane", "lion", "elephant", "zebra", "monkey",
